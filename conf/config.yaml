@@ -1,0 +1,11 @@
+site:
+  name: 我的站点
+  desc: 我的站点的描述
+  url: http://localhost:8080
+  beian: 备案信息
+policy:
+  comment_interval: 3
+  thumbsup_interval: 3
+admin:
+  username: admin
+  password: dc244961ec4750e79f5bf93901df12eccab9dd7a
