@@ -12,10 +12,13 @@ type ArticleService struct {
 
 func (service *ArticleService) Insert(articleDto *models.ArticleDto) (int64, bool) {
 	one := models.Article{
-		GroupId:    articleDto.GroupId,
+		Group: &models.ArticleGroup{
+			Id: articleDto.GroupId,
+		},
 		Title:      articleDto.Title,
 		Content:    articleDto.Content,
 		CreateTime: time.Now(),
+		UpdateTime: time.Now(),
 	}
 	insert, err := sql.Insert(&one)
 	if err != nil {
@@ -39,7 +42,7 @@ func (service *ArticleService) Update(articleDto *models.ArticleDto) (int64, boo
 		one.Content = articleDto.Content
 	}
 	if articleDto.GroupId != 0 {
-		one.GroupId = articleDto.GroupId
+		one.Group.Id = articleDto.GroupId
 	}
 	if articleDto.IsComment == 1 {
 		one.IsComment = 1
@@ -65,24 +68,25 @@ func (service *ArticleService) Query(id int) (models.Article, bool) {
 	return one, true
 }
 
-func (service *ArticleService) List(articleDto *models.ArticleDto) ([]models.Article, bool) {
+func (service *ArticleService) List(articleDto *models.ArticleDto) ([]models.Article, int64, bool) {
 	qs := sql.QueryTable(models.Article{})
 	qs = qs.Limit(models.GetLimit(articleDto.Page, articleDto.Size))
-	qs = qs.Filter("isDelete", false)
+	qs = qs.Filter("isDelete", false).OrderBy("-updateTime").RelatedSel()
 
-	if strings.Trim(articleDto.Title, "") != "" {
-		qs = qs.Filter("title__icontains", articleDto.Title)
+	if strings.Trim(articleDto.Q, "") != "" {
+		qs = qs.Filter("title__icontains", articleDto.Q)
 	}
 	if articleDto.GroupId != 0 {
-		qs = qs.Filter("groupId", articleDto.GroupId)
+		qs = qs.Filter("group", articleDto.GroupId)
 	}
 	var sqlData []models.Article
-	_, err := qs.All(&sqlData, "Id", "GroupId", "Title", "ThumbsupNum", "CommentNum", "CreateTime", "UpdateTime", "IsComment")
+	_, err := qs.All(&sqlData, "Id", "Group", "Title", "ThumbsupNum", "CommentNum", "CreateTime", "UpdateTime", "IsComment")
 	if err != nil {
 		logs.Error("数据库查询 Article 列表失败！", err)
-		return sqlData, false
+		return sqlData, 0, false
 	}
-	return sqlData, true
+	count, _ := qs.Count()
+	return sqlData, count, true
 }
 
 func (service *ArticleService) Delete(id int) (int64, bool) {

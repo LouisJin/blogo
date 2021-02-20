@@ -18,31 +18,24 @@
 
 <div class="content">
     <div class="header">
-        <a class="logo" href="/">{{.globalConfig.Site.Name}}</a>
-        <input type="text" id="search" placeholder="输入关键字搜索" autocomplete="off" class="layui-input search" value="{{.title}}">
+        <div class="logo">
+            <a href="/">{{.globalConfig.Site.Name}}</a>
+        </div>
+        <input type="text" id="search" placeholder="输入关键字搜索" autocomplete="off" class="layui-input search"
+               value="{{.title}}">
     </div>
     <blockquote class="layui-elem-quote header-sub">{{.globalConfig.Site.Desc}}</blockquote>
     <div class="middle">
         <div class="aside">
             <ul class="layui-nav layui-nav-tree">
-                {{if eq 0 $.groupId}}
-                    <li class="layui-nav-item layui-this"><a href="?groupId=0">所有分类</a></li>
-                {{else}}
-                    <li class="layui-nav-item"><a href="?groupId=0">所有分类</a></li>
-                {{end}}
+                <li class="layui-nav-item layui-this"><a href="javascript:setGroupId(0)">所有分类</a></li>
                 {{range .articleGroups}}
-                    {{if eq .Id $.groupId}}
-                        <li class="layui-nav-item layui-this"><a href="?groupId={{.Id}}">{{.Name}}</a></li>
-                    {{else}}
-                        <li class="layui-nav-item"><a href="?groupId={{.Id}}">{{.Name}}</a></li>
-                    {{end}}
+                    <li class="layui-nav-item"><a href="javascript:setGroupId({{.Id}})">{{.Name}}</a></li>
                 {{end}}
             </ul>
         </div>
         <div class="main">
-            {{range .articles}}
-                {{.Title}}
-            {{end}}
+            <table id="article-table" lay-filter="article-table"></table>
         </div>
     </div>
     <div class="footer">
@@ -52,6 +45,6 @@
 
 <script src="static/js/jquery-3.5.1.min.js"></script>
 <script src="static/dep/layui/layui.js"></script>
-<script src="static/js/main.js"></script>
+<script src="static/js/index.js"></script>
 </body>
 </html>

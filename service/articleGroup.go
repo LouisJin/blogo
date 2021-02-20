@@ -13,6 +13,7 @@ func (service *ArticleGroupService) Insert(articleGroupDto *models.ArticleGroupD
 	one := models.ArticleGroup{
 		Name:       articleGroupDto.Name,
 		CreateTime: time.Now(),
+		UpdateTime: time.Now(),
 	}
 	insert, err := sql.Insert(&one)
 	if err != nil {

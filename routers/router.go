@@ -24,4 +24,5 @@ func init() {
 	beego.Router("/admin/api/configEdit", &admin.ApiController{}, "put:ConfigEdit")
 
 	beego.Router("/article/:id", &article.MainController{})
+	beego.Router("/article/api/list", &article.ApiController{}, "get:ArticleList")
 }

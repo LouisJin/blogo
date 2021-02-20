@@ -10,9 +10,9 @@ import (
  */
 type Article struct {
 	Id          int
-	GroupId     int
+	Group       *ArticleGroup `orm:"rel(one)"`
 	Title       string
-	Content     string
+	Content     string `json:"Content,omitempty"`
 	ThumbsupNum int
 	CommentNum  int
 	CreateTime  time.Time
