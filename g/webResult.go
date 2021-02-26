@@ -11,7 +11,7 @@ type WebResult struct {
 
 func GetDefaultWebResult() *WebResult {
 	return &WebResult{
-		Code: Ok,
+		Code: Failure,
 		Msg:  "",
 		Data: nil,
 	}

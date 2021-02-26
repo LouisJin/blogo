@@ -18,11 +18,12 @@ func init() {
 	beego.Router("/admin/api/articleGroup", &admin.ApiController{}, "post:ArticleGroupAdd")
 	beego.Router("/admin/api/articleGroup", &admin.ApiController{}, "put:ArticleGroupEdit")
 	beego.Router("/admin/api/articleGroup/:id([0-9]+)", &admin.ApiController{}, "delete:ArticleGroupDel")
-	beego.Router("/admin/api/articleComment", &admin.ApiController{}, "post:ArticleCommentAdd")
 	beego.Router("/admin/api/articleComment/:id([0-9]+)", &admin.ApiController{}, "delete:ArticleCommentDel")
 	beego.Router("/admin/api/logout", &admin.ApiController{}, "*:Logout")
 	beego.Router("/admin/api/configEdit", &admin.ApiController{}, "put:ConfigEdit")
 
 	beego.Router("/article/:id", &article.MainController{})
 	beego.Router("/article/api/list", &article.ApiController{}, "get:ArticleList")
+	beego.Router("/article/api/commentAdd", &article.ApiController{}, "post:ArticleCommentAdd")
+	beego.Router("/article/api/thumbsUp", &article.ApiController{}, "put:ArticleThumbsup")
 }

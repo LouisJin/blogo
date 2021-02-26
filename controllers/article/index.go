@@ -1,6 +1,7 @@
 package article
 
 import (
+	"blogo/g"
 	beego "github.com/beego/beego/v2/server/web"
 )
 
@@ -13,6 +14,7 @@ func (c *MainController) Get() {
 	article, b := articleService.Query(id)
 	if b {
 		c.Data["article"] = article
+		c.Data["globalConfig"] = g.GlobalConfig
 		c.TplName = "article.tpl"
 	} else {
 		c.Abort("404")

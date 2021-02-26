@@ -9,11 +9,17 @@ a {
     font-size: 14px;
     cursor: pointer;
 }
-
 a:hover {
     color: #01AAED;
 }
 
+.border {
+    border: white 1px solid;
+}
+
+.layui-elem-quote {
+    margin-bottom: 0;
+}
 .layui-table {
     background-color: transparent;
 }
@@ -35,6 +41,9 @@ a:hover {
 .layui-laypage-limits {
     display: none !important;
 }
+.layui-form-label {
+    background-color: transparent !important;
+}
 
 .content {
     max-width: 1000px;
@@ -47,7 +56,6 @@ a:hover {
 .header {
     margin-top: 60px;
     height: 80px;
-    border: white 1px solid;
     justify-items: center;
     display: flex;
     flex-direction: row;
@@ -76,6 +84,7 @@ a:hover {
 }
 
 .middle {
+    margin-top: 10px;
     display: flex;
     flex-direction: row;
     flex: 1;
@@ -83,7 +92,6 @@ a:hover {
 
 .aside {
     width: 250px;
-    border: white 1px solid;
     min-width: 250px;
 }
 
@@ -102,4 +110,16 @@ a:hover {
     margin-top: 20px;
     height: 35px;
     text-align: center;
+}
+
+.article {
+    padding: 0 10px;
+    flex-direction: column;
+}
+
+.login {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }

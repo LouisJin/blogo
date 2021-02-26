@@ -12,6 +12,7 @@ type MainController struct {
 
 func (c *MainController) Get() {
 	session := c.GetSession(g.UserToken)
+	c.Data["globalConfig"] = g.GlobalConfig
 	if session == nil {
 		c.TplName = "login.tpl"
 	} else {
@@ -42,13 +43,10 @@ func (c *MainController) Login() {
 		c.SetSession(g.UserToken, uuid.NewV4())
 		webResult.Code = g.Ok
 		webResult.Msg = "登陆成功"
-		c.Data["json"] = webResult
-		c.ServeJSON(true)
-		return
 	} else {
 		webResult.Code = g.Failure
 		webResult.Msg = "用户名或密码不正确"
-		c.Data["json"] = webResult
-		c.ServeJSON(true)
 	}
+	c.Data["json"] = webResult
+	c.ServeJSON(true)
 }

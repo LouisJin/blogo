@@ -22,6 +22,7 @@ func (c *ApiController) ArticleAdd() {
 	err := c.ParseForm(articleDto)
 	if err != nil {
 		logs.Error("获取 articleDto 参数失败", err)
+		return
 	}
 	_, b := articleService.Insert(articleDto)
 	if b {
@@ -41,6 +42,7 @@ func (c *ApiController) ArticleEdit() {
 	err := c.ParseForm(articleDto)
 	if err != nil {
 		logs.Error("获取 articleDto 参数失败", err)
+		return
 	}
 	_, b := articleService.Update(articleDto)
 	if b {
@@ -75,6 +77,7 @@ func (c *ApiController) ArticleGroupAdd() {
 	err := c.ParseForm(articleGroupDto)
 	if err != nil {
 		logs.Error("获取 articleGroupDto 参数失败", err)
+		return
 	}
 	_, b := articleGroupService.Insert(articleGroupDto)
 	if b {
@@ -94,6 +97,7 @@ func (c *ApiController) ArticleGroupEdit() {
 	err := c.ParseForm(articleGroupDto)
 	if err != nil {
 		logs.Error("获取 articleGroupDto 参数失败", err)
+		return
 	}
 	_, b := articleGroupService.Update(articleGroupDto)
 	if b {
@@ -117,25 +121,6 @@ func (c *ApiController) ArticleGroupDel() {
 	} else {
 		webResult.Code = g.Failure
 		webResult.Msg = "删除文章分类失败"
-	}
-	c.Data["json"] = webResult
-	c.ServeJSON(true)
-}
-
-func (c *ApiController) ArticleCommentAdd() {
-	webResult := g.GetDefaultWebResult()
-	articleCommentDto := new(models.ArticleCommentDto)
-	err := c.ParseForm(articleCommentDto)
-	if err != nil {
-		logs.Error("获取 articleCommentDto 参数失败", err)
-	}
-	_, b := articleCommentService.Insert(articleCommentDto)
-	if b {
-		webResult.Code = g.Ok
-		webResult.Msg = "添加文章评论成功"
-	} else {
-		webResult.Code = g.Failure
-		webResult.Msg = "添加文章评论失败"
 	}
 	c.Data["json"] = webResult
 	c.ServeJSON(true)
@@ -169,6 +154,7 @@ func (c *ApiController) ConfigEdit() {
 	err := c.ParseForm(globalConfig)
 	if err != nil {
 		logs.Error("获取 globalConfig 参数失败", err)
+		return
 	}
 	if globalConfig.Admin.Password != "" {
 		globalConfig.Admin.Password = g.EncryptPassword(globalConfig.Admin.Password)

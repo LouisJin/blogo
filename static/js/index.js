@@ -20,7 +20,21 @@ layui.use(['table'], function () {
                 }
             },
             {field: 'ThumbsupNum', title: '点赞', width: 70, unresize: true, align: 'center', style: 'color: white;'},
-            {field: 'CommentNum', title: '评论', width: 70, unresize: true, align: 'center', style: 'color: white;'},
+            {
+                field: 'CommentNum',
+                title: '评论',
+                width: 70,
+                unresize: true,
+                align: 'center',
+                style: 'color: white;',
+                templet: function (row) {
+                    if (row.IsComment === 0) {
+                        return "X";
+                    } else {
+                        return row.CommentNum;
+                    }
+                }
+            },
             {
                 field: 'UpdateTime',
                 title: '编辑时间',
@@ -46,7 +60,7 @@ layui.use(['table'], function () {
         }
     });
     table.on('row(article-table)', function (row) {
-        window.open("article/"+row.data.Id, "_blank");
+        window.open("article/" + row.data.Id, "_blank");
     })
 })
 

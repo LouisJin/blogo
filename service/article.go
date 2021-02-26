@@ -49,10 +49,53 @@ func (service *ArticleService) Update(articleDto *models.ArticleDto) (int64, boo
 	} else if articleDto.IsComment == -1 {
 		one.IsComment = 0
 	}
+	if articleDto.CommentNum != 0 {
+		one.CommentNum = articleDto.CommentNum
+	}
+	if articleDto.ThumbsupNum != 0 {
+		one.ThumbsupNum = articleDto.ThumbsupNum
+	}
 	one.UpdateTime = time.Now()
 	update, err := sql.Update(&one)
 	if err != nil {
 		logs.Error("数据库更新 Article 失败！", err)
+		return -1, false
+	}
+	return update, true
+}
+
+func (service *ArticleService) UpdateCommentNum(id int) (int64, bool) {
+	one := models.Article{Id: id}
+	err := sql.Read(&one)
+	if err != nil {
+		logs.Error("数据库更新 Article 评论数失败！找不到id: %d", id)
+		return -1, false
+	}
+	count, err := sql.QueryTable(models.ArticleComment{}).Filter("isDelete", 0).Filter("articleId", id).Count()
+	if err != nil {
+		logs.Error("数据库查询 ArticleComment 总数失败！", err)
+		return -1, false
+	}
+	one.CommentNum = int(count)
+	update, err := sql.Update(&one)
+	if err != nil {
+		logs.Error("数据库更新 Article 评论数失败！", err)
+		return -1, false
+	}
+	return update, true
+}
+
+func (service *ArticleService) IncreaseThumbsup(id int) (int64, bool) {
+	one := models.Article{Id: id}
+	err := sql.Read(&one)
+	if err != nil {
+		logs.Error("数据库更新 Article 点赞数失败！找不到id: %d", id)
+		return -1, false
+	}
+	one.ThumbsupNum += 1
+	update, err := sql.Update(&one)
+	if err != nil {
+		logs.Error("数据库更新 Article 点赞数失败！", err)
 		return -1, false
 	}
 	return update, true
