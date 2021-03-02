@@ -16,7 +16,18 @@ func (c *MainController) Get() {
 	if session == nil {
 		c.TplName = "login.tpl"
 	} else {
-		c.TplName = "admin.tpl"
+		c.Layout = "admin.tpl"
+		// 感知 menu 点击, 默认打开 文章管理 菜单
+		menu := c.GetString("menu", "article")
+		switch menu {
+		case "article":
+			c.TplName = "adminArticle.html"
+		case "group":
+			c.TplName = "adminGroup.html"
+		case "site":
+			c.TplName = "adminSite.html"
+		}
+		c.Data["menu"] = menu
 	}
 }
 

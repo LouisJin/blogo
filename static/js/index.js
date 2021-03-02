@@ -3,7 +3,6 @@ layui.use(['table'], function () {
 
     table.render({
         elem: "#article-table",
-        height: "full-255",
         limit: 20,
         page: true,
         cols: [[

@@ -28,6 +28,15 @@ a:hover {
 }
 .layui-table-view {
     margin: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.layui-table-box{
+    flex: 1;
+}
+.layui-table-body{
+    margin: 0;
 }
 .layui-table td {
     cursor: pointer !important;
@@ -54,8 +63,8 @@ a:hover {
 }
 
 .header {
-    margin-top: 60px;
-    height: 80px;
+    margin-top: 20px;
+    height: 60px;
     justify-items: center;
     display: flex;
     flex-direction: row;
@@ -102,13 +111,21 @@ a:hover {
 }
 
 .main {
+    flex: 1;
     margin-left: 20px;
-    width: calc(100% - 270px);
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .footer {
-    margin-top: 20px;
     height: 35px;
+    line-height: 35px;
     text-align: center;
 }
 
